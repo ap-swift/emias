@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Отчёт проверки — {{ source_name }}</title>
+<style>
+  :root {
+    --c-bg: #f8f9fa;
+    --c-card: #fff;
+    --c-border: #dee2e6;
+    --c-text: #212529;
+    --c-muted: #6c757d;
+    --c-crit: #dc3545;
+    --c-crit-bg: #f8d7da;
+    --c-major: #e67e22;
+    --c-major-bg: #fde8d0;
+    --c-minor: #ffc107;
+    --c-minor-bg: #fff3cd;
+    --c-ok: #198754;
+    --c-ok-bg: #d1e7dd;
+    --c-info: #0d6efd;
+    --c-info-bg: #cfe2ff;
+    --c-manual: #6f42c1;
+    --c-manual-bg: #e8dff5;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--c-bg);
+    color: var(--c-text);
+    margin: 0;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .subtitle { color: var(--c-muted); font-size: 0.9rem; margin-bottom: 24px; }
+
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .summary-card {
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .summary-card .num { font-size: 2rem; font-weight: 700; }
+  .summary-card .label { font-size: 0.82rem; color: var(--c-muted); }
+  .sc-ok { background: var(--c-ok-bg); }
+  .sc-ok .num { color: var(--c-ok); }
+  .sc-crit { background: var(--c-crit-bg); }
+  .sc-crit .num { color: var(--c-crit); }
+  .sc-major { background: var(--c-major-bg); }
+  .sc-major .num { color: var(--c-major); }
+  .sc-minor { background: var(--c-minor-bg); }
+  .sc-minor .num { color: #997404; }
+  .sc-info { background: var(--c-info-bg); }
+  .sc-info .num { color: var(--c-info); }
+  .sc-manual { background: var(--c-manual-bg); }
+  .sc-manual .num { color: var(--c-manual); }
+
+  h2 { font-size: 1.2rem; margin: 28px 0 12px; border-bottom: 2px solid var(--c-border); padding-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--c-border); font-size: 0.85rem; }
+  th { background: var(--c-bg); font-weight: 600; position: sticky; top: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-critical { background: var(--c-crit); color: #fff; }
+  .badge-major { background: var(--c-major); color: #fff; }
+  .badge-minor { background: var(--c-minor); color: #212529; }
+  .badge-info { background: var(--c-info); color: #fff; }
+  .badge-manual { background: var(--c-manual); color: #fff; }
+
+  .rule-row:hover { background: #f1f3f5; }
+  .rule-pass { color: var(--c-ok); }
+  .rule-fail { color: var(--c-crit); }
+
+  .section-block {
+    background: var(--c-card);
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .section-block h3 { margin: 0 0 8px; font-size: 1rem; }
+  .section-block .page-hint { color: var(--c-muted); font-size: 0.8rem; }
+  .section-text { white-space: pre-wrap; font-size: 0.85rem; max-height: 300px; overflow-y: auto; }
+
+  .disclaimer {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 28px 0;
+    font-size: 0.88rem;
+    color: #664d03;
+  }
+
+  .passed-list { columns: 2; column-gap: 24px; list-style: none; padding: 0; }
+  .passed-list li { padding: 3px 0; font-size: 0.85rem; }
+  .passed-list li::before { content: "✓ "; color: var(--c-ok); font-weight: 700; }
+
+  .footer { margin-top: 32px; text-align: center; color: var(--c-muted); font-size: 0.8rem; }
+  .src-col { color: var(--c-muted); font-size: 0.82rem; }
+  .rec-col { color: #0d6efd; font-size: 0.82rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Отчёт проверки истории болезни</h1>
+  <div class="subtitle">Файл: {{ source_name }} &middot; Страниц: {{ num_pages }} &middot; {{ generated_at }}</div>
+
+  <div class="summary">
+    <div class="summary-card sc-ok">
+      <div class="num">{{ passed_rules }}</div>
+      <div class="label">Пройдено правил</div>
+    </div>
+    <div class="summary-card sc-crit">
+      <div class="num">{{ num_criticals }}</div>
+      <div class="label">Критических</div>
+    </div>
+    <div class="summary-card sc-major">
+      <div class="num">{{ num_majors }}</div>
+      <div class="label">Существенных</div>
+    </div>
+    <div class="summary-card sc-minor">
+      <div class="num">{{ num_minors }}</div>
+      <div class="label">Формальных</div>
+    </div>
+    <div class="summary-card sc-manual">
+      <div class="num">{{ num_manual_reviews }}</div>
+      <div class="label">Руч. проверка</div>
+    </div>
+  </div>
+
+  {% macro finding_badge(f) %}
+    {% if f.manual_review %}
+      <span class="badge badge-manual">Руч. проверка</span>
+    {% elif f.severity.value == "critical" %}
+      <span class="badge badge-critical">Критическое</span>
+    {% elif f.severity.value == "major" %}
+      <span class="badge badge-major">Существенное</span>
+    {% elif f.severity.value == "minor" %}
+      <span class="badge badge-minor">Формальное</span>
+    {% else %}
+      <span class="badge badge-info">Инфо</span>
+    {% endif %}
+  {% endmacro %}
+
+  {% macro findings_table(items) %}
+  <table>
+    <thead>
+      <tr>
+        <th style="width:75px">Код</th>
+        <th style="width:100px">Уровень</th>
+        <th style="width:120px">Раздел</th>
+        <th>Описание</th>
+        <th style="width:180px">Рекомендация</th>
+        <th style="width:140px">Источник</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in items %}
+      <tr>
+        <td><strong>{{ f.rule_id }}</strong></td>
+        <td>{{ finding_badge(f) }}</td>
+        <td>{{ f.section or "—" }}</td>
+        <td>
+          {{ f.message }}
+          {% if f.details %}<br><small style="color: var(--c-muted);">{{ f.details }}</small>{% endif %}
+          {% if f.evidence %}<br><small style="color: var(--c-muted); font-style: italic;">Найдено: &laquo;{{ f.evidence }}&raquo;</small>{% endif %}
+        </td>
+        <td class="rec-col">{{ f.recommendation or "—" }}</td>
+        <td class="src-col">{{ f.source or "—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endmacro %}
+
+  {% if not violations and not manual_reviews %}
+  <div class="section-block" style="text-align:center; color: var(--c-ok);">
+    <strong>Все проверки пройдены успешно!</strong>
+  </div>
+  {% else %}
+
+    {% if criticals %}
+    <h2>Критические замечания</h2>
+    {{ findings_table(criticals) }}
+    {% endif %}
+
+    {% if majors %}
+    <h2>Существенные замечания</h2>
+    {{ findings_table(majors) }}
+    {% endif %}
+
+    {% if minors %}
+    <h2>Формальные замечания</h2>
+    {{ findings_table(minors) }}
+    {% endif %}
+
+    {% if manual_reviews %}
+    <h2>Требует ручной проверки</h2>
+    {{ findings_table(manual_reviews) }}
+    {% endif %}
+
+  {% endif %}
+
+  <h2>Успешно пройденные проверки</h2>
+  {% set passed = [] %}
+  {% for r in rule_results %}
+    {% if r.passed %}
+      {% if passed.append(r) %}{% endif %}
+    {% endif %}
+  {% endfor %}
+  {% if passed %}
+  <ul class="passed-list">
+    {% for r in passed %}
+    <li>{{ r.rule_id }}: {{ r.rule_name }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p style="color: var(--c-muted);">Нет пройденных проверок.</p>
+  {% endif %}
+
+  <h2>Результаты по правилам</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Код</th>
+        <th>Правило</th>
+        <th>Результат</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rule_results %}
+      <tr class="rule-row">
+        <td>{{ r.rule_id }}</td>
+        <td>{{ r.rule_name }}</td>
+        <td>
+          {% if r.passed %}
+            <span class="rule-pass">&#10003; Пройдено</span>
+          {% else %}
+            <span class="rule-fail">&#10007; Не пройдено ({{ r.findings|length }})</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Разделы документа</h2>
+  {% for name, sec in sections.items() %}
+  <div class="section-block">
+    <h3>{{ name }}
+      {% if sec.page_hint %}<span class="page-hint">(стр. {{ sec.page_hint }})</span>{% endif %}
+    </h3>
+    <div class="section-text">{{ sec.text[:2000] }}{% if sec.text|length > 2000 %}…{% endif %}</div>
+  </div>
+  {% endfor %}
+
+  <div class="disclaimer">
+    <strong>Дисклеймер:</strong> Автоматическая проверка является предварительной.
+    Итоговую оценку качества медицинской документации выполняет уполномоченный
+    медицинский специалист. Пункты, помеченные «Руч. проверка», требуют обязательной
+    ручной верификации.
+  </div>
+
+  <div class="footer">EMIAS Check v{{ version }} &middot; Сгенерировано автоматически</div>
+</div>
+</body>
+</html>

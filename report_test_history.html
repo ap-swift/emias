@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Отчёт проверки — test_history.pdf</title>
+<style>
+  :root {
+    --c-bg: #f8f9fa;
+    --c-card: #fff;
+    --c-border: #dee2e6;
+    --c-text: #212529;
+    --c-muted: #6c757d;
+    --c-crit: #dc3545;
+    --c-crit-bg: #f8d7da;
+    --c-major: #e67e22;
+    --c-major-bg: #fde8d0;
+    --c-minor: #ffc107;
+    --c-minor-bg: #fff3cd;
+    --c-ok: #198754;
+    --c-ok-bg: #d1e7dd;
+    --c-info: #0d6efd;
+    --c-info-bg: #cfe2ff;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--c-bg);
+    color: var(--c-text);
+    margin: 0;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1020px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  .subtitle { color: var(--c-muted); font-size: 0.9rem; margin-bottom: 24px; }
+
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .summary-card {
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .summary-card .num { font-size: 2rem; font-weight: 700; }
+  .summary-card .label { font-size: 0.82rem; color: var(--c-muted); }
+  .sc-ok { background: var(--c-ok-bg); }
+  .sc-ok .num { color: var(--c-ok); }
+  .sc-crit { background: var(--c-crit-bg); }
+  .sc-crit .num { color: var(--c-crit); }
+  .sc-major { background: var(--c-major-bg); }
+  .sc-major .num { color: var(--c-major); }
+  .sc-minor { background: var(--c-minor-bg); }
+  .sc-minor .num { color: #997404; }
+  .sc-info { background: var(--c-info-bg); }
+  .sc-info .num { color: var(--c-info); }
+
+  h2 { font-size: 1.2rem; margin: 28px 0 12px; border-bottom: 2px solid var(--c-border); padding-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--c-border); font-size: 0.88rem; }
+  th { background: var(--c-bg); font-weight: 600; position: sticky; top: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-critical { background: var(--c-crit); color: #fff; }
+  .badge-major { background: var(--c-major); color: #fff; }
+  .badge-minor { background: var(--c-minor); color: #212529; }
+  .badge-info { background: var(--c-info); color: #fff; }
+
+  .rule-row:hover { background: #f1f3f5; }
+  .rule-pass { color: var(--c-ok); }
+  .rule-fail { color: var(--c-crit); }
+
+  .section-block {
+    background: var(--c-card);
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .section-block h3 { margin: 0 0 8px; font-size: 1rem; }
+  .section-block .page-hint { color: var(--c-muted); font-size: 0.8rem; }
+  .section-text { white-space: pre-wrap; font-size: 0.85rem; max-height: 300px; overflow-y: auto; }
+
+  .footer { margin-top: 32px; text-align: center; color: var(--c-muted); font-size: 0.8rem; }
+  .src-col { color: var(--c-muted); font-size: 0.82rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Отчёт проверки истории болезни</h1>
+  <div class="subtitle">Файл: test_history.pdf &middot; Страниц: 3 &middot; 30.04.2026 15:14</div>
+
+  <div class="summary">
+    <div class="summary-card sc-ok">
+      <div class="num">11</div>
+      <div class="label">Пройдено правил</div>
+    </div>
+    <div class="summary-card sc-crit">
+      <div class="num">0</div>
+      <div class="label">Критических</div>
+    </div>
+    <div class="summary-card sc-major">
+      <div class="num">2</div>
+      <div class="label">Существенных</div>
+    </div>
+    <div class="summary-card sc-minor">
+      <div class="num">1</div>
+      <div class="label">Формальных</div>
+    </div>
+    <div class="summary-card sc-info">
+      <div class="num">0</div>
+      <div class="label">Информационных</div>
+    </div>
+  </div>
+
+  
+
+  
+
+  
+
+    
+
+    
+    <h2>Существенные замечания</h2>
+    
+  <table>
+    <thead>
+      <tr>
+        <th style="width:80px">Код</th>
+        <th style="width:110px">Уровень</th>
+        <th style="width:130px">Раздел</th>
+        <th>Описание</th>
+        <th style="width:170px">Источник</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td><strong>530N-009</strong></td>
+        <td>
+    
+      <span class="badge badge-major">Существенное</span>
+    
+  </td>
+        <td>Диагноз</td>
+        <td>
+          Не найден предварительный диагноз при поступлении
+          <br><small style="color: var(--c-muted);">Должен быть указан предварительный диагноз отдельно от клинического</small>
+          <br><small style="color: var(--c-muted); font-style: italic;">Найдено: &laquo;Диагноз Основной: Острый инфаркт миокарда передней стенки левого желудочка. I21.0 Осложнения: ХСН IIA стадии. I50.0 Сопу...&raquo;</small>
+        </td>
+        <td class="src-col">Приказ Минздрава России № 530н</td>
+      </tr>
+      
+      <tr>
+        <td><strong>530N-010</strong></td>
+        <td>
+    
+      <span class="badge badge-major">Существенное</span>
+    
+  </td>
+        <td>Диагноз</td>
+        <td>
+          Не найдено обоснование клинического диагноза
+          <br><small style="color: var(--c-muted);">История болезни должна содержать обоснование предварительного и/или клинического диагноза</small>
+          
+        </td>
+        <td class="src-col">Приказ Минздрава России № 530н</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+    
+
+    
+    <h2>Формальные замечания</h2>
+    
+  <table>
+    <thead>
+      <tr>
+        <th style="width:80px">Код</th>
+        <th style="width:110px">Уровень</th>
+        <th style="width:130px">Раздел</th>
+        <th>Описание</th>
+        <th style="width:170px">Источник</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td><strong>530N-012</strong></td>
+        <td>
+    
+      <span class="badge badge-minor">Формальное</span>
+    
+  </td>
+        <td>Эпикриз</td>
+        <td>
+          В эпикризе не найдена подпись (упоминание) лечащего врача
+          
+          <br><small style="color: var(--c-muted); font-style: italic;">Найдено: &laquo;Выписной эпикриз Пациент Иванов И.И., 63 года, находился на стационарном лечении с 10.04.2026 по 22.04.2026 с диагнозом:...&raquo;</small>
+        </td>
+        <td class="src-col">Приказ Минздрава России № 530н</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+    
+
+  
+
+  <h2>Результаты по правилам</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Код</th>
+        <th>Правило</th>
+        <th>Результат</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr class="rule-row">
+        <td>530N-001</td>
+        <td>Обязательные разделы</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-002</td>
+        <td>Паспортные данные</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-003</td>
+        <td>Код МКБ-10 в диагнозе</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-004</td>
+        <td>Дневниковые записи</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-005</td>
+        <td>Рекомендации в эпикризе</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-006</td>
+        <td>Информированное согласие</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-007</td>
+        <td>Даты госпитализации</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-008</td>
+        <td>Дозировки в назначениях</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-009</td>
+        <td>Предварительный диагноз</td>
+        <td>
+          
+            <span class="rule-fail">&#10007; Не пройдено (1)</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-010</td>
+        <td>Обоснование диагноза</td>
+        <td>
+          
+            <span class="rule-fail">&#10007; Не пройдено (1)</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-011</td>
+        <td>Полнота объективного статуса</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>530N-012</td>
+        <td>Подпись в эпикризе</td>
+        <td>
+          
+            <span class="rule-fail">&#10007; Не пройдено (1)</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>КР-001</td>
+        <td>Антиагреганты при ОИМ</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+      <tr class="rule-row">
+        <td>КР-002</td>
+        <td>Антибиотики при пневмонии</td>
+        <td>
+          
+            <span class="rule-pass">&#10003; Пройдено</span>
+          
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+  <h2>Разделы документа</h2>
+  
+  <div class="section-block">
+    <h3>Преамбула
+      <span class="page-hint">(стр. 1)</span>
+    </h3>
+    <div class="section-text">ИСТОРИЯ БОЛЕЗНИ № 12345</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Паспортная часть
+      <span class="page-hint">(стр. 1)</span>
+    </h3>
+    <div class="section-text">Паспортная часть
+Ф.И.О.: Иванов Иван Иванович
+Дата рождения: 15.03.1960
+Полис ОМС: 7712345678901234
+Дата поступления: 10.04.2026
+Дата выписки: 22.04.2026</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Жалобы
+      <span class="page-hint">(стр. 1)</span>
+    </h3>
+    <div class="section-text">Жалобы
+При поступлении: на давящие боли за грудиной, иррадиирующие в левую руку,
+одышку при минимальной физической нагрузке, слабость.</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Анамнез заболевания
+      <span class="page-hint">(стр. 1)</span>
+    </h3>
+    <div class="section-text">Анамнез заболевания
+Считает себя больным в течение 3­х лет, когда впервые стали появляться боли
+за грудиной при физической нагрузке. Не обследовался, не лечился.
+Настоящее ухудшение с 10.04.2026, когда возникли интенсивные загрудинные боли
+в покое. Вызвана СМП, госпитализирован экстренно.</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Анамнез жизни
+      <span class="page-hint">(стр. 1)</span>
+    </h3>
+    <div class="section-text">Анамнез жизни
+Хронические заболевания: артериальная гипертензия в течение 10 лет.
+Вредные привычки: курение в течение 30 лет.
+Наследственность: отец перенёс инфаркт миокарда в 55 лет.
+Аллергологический анамнез: не отягощён.</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Объективный статус
+      <span class="page-hint">(стр. 2)</span>
+    </h3>
+    <div class="section-text">Объективный статус
+Общее состояние средней тяжести. Сознание ясное. Положение активное.
+Кожные покровы бледные. АД 150/90 мм рт.ст. ЧСС 88 уд/мин.
+Тоны сердца приглушены, ритм правильный.</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Диагноз
+      <span class="page-hint">(стр. 2)</span>
+    </h3>
+    <div class="section-text">Диагноз
+Основной: Острый инфаркт миокарда передней стенки левого желудочка. I21.0
+Осложнения: ХСН IIA стадии. I50.0
+Сопутствующий: Артериальная гипертензия III стадии. I11.9</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>План обследования
+      <span class="page-hint">(стр. 2)</span>
+    </h3>
+    <div class="section-text">План обследования
+1. ОАК, ОАМ, биохимический анализ крови
+2. ЭКГ в динамике
+3. ЭхоКГ
+4. Коронарография</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Результаты обследований
+      <span class="page-hint">(стр. 2)</span>
+    </h3>
+    <div class="section-text">Результаты обследований
+Тропонин I: 15.2 нг/мл (норма до 0.04)
+ЭКГ: подъём сегмента ST в отведениях V1­V4
+ЭхоКГ: ФВ 42%, гипокинез передней стенки ЛЖ</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Лечение
+      <span class="page-hint">(стр. 2)</span>
+    </h3>
+    <div class="section-text">Лечение
+1. Аспирин 100 мг 1 раз в сутки
+2. Клопидогрел 75 мг 1 раз в сутки
+3. Гепарин 5000 ед п/к 2 раза в сутки
+4. Бисопролол 5 мг 1 раз в сутки
+5. Аторвастатин 40 мг 1 раз в сутки</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Дневники
+      <span class="page-hint">(стр. 3)</span>
+    </h3>
+    <div class="section-text">Дневники
+12.04.2026 Осмотр лечащего врача.
+Состояние стабильное. Боли за грудиной не рецидивировали.
+АД 130/80, ЧСС 72. Лечение продолжено.
+Подпись: врач Петров А.С.
+15.04.2026 Осмотр лечащего врача.
+Состояние с положительной динамикой. Жалоб нет.
+АД 125/75, ЧСС 68. Лечение продолжено.
+Подпись: врач Петров А.С.</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Информированное согласие
+      <span class="page-hint">(стр. 3)</span>
+    </h3>
+    <div class="section-text">Информированное добровольное согласие
+Пациент ознакомлен с планом лечения, возможными осложнениями.
+Информированное добровольное согласие на медицинское вмешательство получено.</div>
+  </div>
+  
+  <div class="section-block">
+    <h3>Эпикриз
+      <span class="page-hint">(стр. 3)</span>
+    </h3>
+    <div class="section-text">Выписной эпикриз
+Пациент Иванов И.И., 63 года, находился на стационарном лечении с 10.04.2026
+по 22.04.2026 с диагнозом: Острый инфаркт миокарда передней стенки ЛЖ (I21.0).
+Проведено лечение: антиагрегантная, антикоагулянтная, гиполипидемическая терапия.
+Выписывается в удовлетворительном состоянии.
+Рекомендации при выписке:
+1. Наблюдение кардиолога по месту жительства
+2. Приём аспирина 100 мг ежедневно длительно
+3. Клопидогрел 75 мг ежедневно 12 месяцев
+4. Аторвастатин 40 мг ежедневно
+5. Контроль ЭКГ через 1 месяц</div>
+  </div>
+  
+
+  <div class="footer">EMIAS Check v0.1.0 &middot; Сгенерировано автоматически</div>
+</div>
+</body>
+</html>
